@@ -1,7 +1,8 @@
 from PyQt5 import QtWidgets, QtCore, QtGui
 import sys
 
-
+from hahmo import Hahmo
+from hahmographicsitem import HahmoGraphicsItem
 
 class GUI(QtWidgets.QMainWindow):
 
@@ -13,15 +14,16 @@ class GUI(QtWidgets.QMainWindow):
         self.horizontal = QtWidgets.QHBoxLayout()
         self.centralWidget().setLayout(self.horizontal)
         self.init_window()
+        self.hahmo_graphics = None
 
         self.add_maailma_grid_items()
+        self.add_hahmo_graphics_items()
+        self.update_hahmo()
 
-        #selvitä ajastin
-        '''
         self.timer = QtCore.QTimer()
-        self.timer.timeout.connect(self.update_robots)
+        self.timer.timeout.connect(self.update_hahmo)
         self.timer.start(10) 
-        '''
+
 
     def init_window(self):
         
@@ -59,3 +61,13 @@ class GUI(QtWidgets.QMainWindow):
                     brush = QtGui.QBrush(vari)
                     square.setBrush(brush)
                     self.scene.addItem(square)
+
+    def add_hahmo_graphics_items():
+    	hahmo = self.taso.get_hahmo()
+    	hahmo_graphics = HahmoGraphicsItem(hahmo, self.ruutu_size)
+    	self.hahmo_graphics = hahmo_graphics
+    	self.scene.addItem(hahmo_graphics)
+
+
+    def update_hahmo(self):
+    	self.hahmo_graphics.update()

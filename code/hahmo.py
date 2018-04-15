@@ -1,6 +1,7 @@
+
 class Hahmo():
 	
-	def __init__(self, name):
+	def __init__(self):
 		self.maailma = None
 		self.sijainti = None
 		self.dead = False
@@ -28,3 +29,7 @@ class Hahmo():
 
 	def get_sijainti_ruutu(self):
 		return self.get_maailma().get_square(self.get_location())
+
+	#luo hahmon liikutus
+	def move(self, suunta):
+		pass

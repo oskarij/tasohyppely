@@ -22,3 +22,10 @@ class Ruutu():
 			return True
 		else:
 			return False
+
+	def set_hahmo(self, hahmo):
+		if self.is_empty():
+			self.player = hahmo
+			return True
+		else:
+			return False

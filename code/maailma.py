@@ -11,19 +11,19 @@ class Maailma():
         for x in range(20):      
             self.squares[x] = [None] * 20
             for y in range(20):   
-                self.squares[x][y] = Ruutu()    
+                self.squares[x][y] = Ruutu()  
+        self.hahmo = None
         self.set_borders()
 
     def get_width(self):
 
         return len(self.squares)
 
-
     def get_height(self):
   
         return len(self.squares[0])
 
-    def get_square(self, sijainti):
+    def get_ruutu(self, sijainti):
         #palauttaa ruutu-olion kyseisessä sijainnissa
         #jos ruutua ei ole - palauttaa ruutu-objektin, joka ei sisälly tasoon
         if self.contains(sijainti):
@@ -39,6 +39,12 @@ class Maailma():
         y_koordinaatti = sijainti.get_y()
         return 0 <= x_koordinaatti < self.get_width() and 0 <= y_koordinaatti < self.get_height()
 
+    def add_hahmo(self, hahmo, sijainti):
+    	self.hahmo = hahmo
+    	self.get_ruutu(sijainti).set_hahmo(hahmo)
+
+    def get_hahmo(self):
+    	return self.hahmo
 
     #asettaa tasolle 
     def set_borders(self):
