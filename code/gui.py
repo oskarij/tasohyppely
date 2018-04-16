@@ -62,7 +62,7 @@ class GUI(QtWidgets.QMainWindow):
                     square.setBrush(brush)
                     self.scene.addItem(square)
 
-    def add_hahmo_graphics_items():
+    def add_hahmo_graphics_items(self):
     	hahmo = self.taso.get_hahmo()
     	hahmo_graphics = HahmoGraphicsItem(hahmo, self.ruutu_size)
     	self.hahmo_graphics = hahmo_graphics

@@ -10,8 +10,8 @@ class Hahmo():
 		return self.maailma
 
 	def set_maailma(self, maailma, sijainti):
-		target_ruutu = maailma.get_square(sijainti)
-		if not target_ruutu.is_empty() or self.get_maailma() is not None:
+		target_ruutu = maailma.get_ruutu(sijainti)
+		if (target_ruutu.get_hahmo() != self) or self.get_maailma() is not None:
 			return False
 		else:
 			self.maailma = maailma
@@ -28,7 +28,7 @@ class Hahmo():
 		return self.sijainti
 
 	def get_sijainti_ruutu(self):
-		return self.get_maailma().get_square(self.get_location())
+		return self.get_maailma().get_ruutu(self.get_sijainti())
 
 	#luo hahmon liikutus
 	def move(self, suunta):

@@ -32,7 +32,7 @@ class Maailma():
             return Ruutu(True)
 
     def add_wall(self, sijainti):
-        return self.get_square(sijainti).set_wall()
+        return self.get_ruutu(sijainti).set_wall()
 
     def contains(self, sijainti):
         x_koordinaatti = sijainti.get_x()
@@ -41,7 +41,10 @@ class Maailma():
 
     def add_hahmo(self, hahmo, sijainti):
     	self.hahmo = hahmo
-    	self.get_ruutu(sijainti).set_hahmo(hahmo)
+    	ret = self.get_ruutu(sijainti).set_hahmo(hahmo)
+    	self.hahmo.set_maailma(self,sijainti)
+    	if ret == False:
+    		print("Hahmon lisäys ei onnistunut")
 
     def get_hahmo(self):
     	return self.hahmo
