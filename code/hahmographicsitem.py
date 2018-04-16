@@ -10,10 +10,10 @@ class HahmoGraphicsItem(QtWidgets.QGraphicsEllipseItem):
 		self.ruutu_size = ruutu_size
 		brush = QtGui.QBrush(1)
 		self.setBrush(brush)
-
-		x = hahmo.get_sijainti().get_x()
-		y = hahmo.get_sijainti().get_y()
-		self.setRect(x*ruutu_size,y*ruutu_size,ruutu_size,ruutu_size)
+		rect = QtCore.QRectF()
+		rect.setWidth(ruutu_size)
+		rect.setHeight(ruutu_size)
+		self.setRect(rect)
 		self.update()
 
 	def update(self):
@@ -22,9 +22,7 @@ class HahmoGraphicsItem(QtWidgets.QGraphicsEllipseItem):
 
 	def updatePosition(self):
 		sijainti = self.hahmo.get_sijainti()
-		ruutu = self.hahmo.get_sijainti_ruutu().is_empty()
-		if (ruutu == True):
-			self.setPos(sijainti.x*self.ruutu_size, sijainti.y*self.ruutu_size)
+		self.setPos(sijainti.x*self.ruutu_size, sijainti.y*self.ruutu_size)
 
 	def updateColor(self):
 		color = QtGui.QColor(255,255,0)
