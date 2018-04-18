@@ -1,6 +1,7 @@
 from PyQt5 import QtCore
 
 from hahmographicsitem import HahmoGraphicsItem
+
 class Hahmo():
 	
 	def __init__(self):
@@ -29,23 +30,26 @@ class Hahmo():
 	def get_sijainti(self):
 		return self.sijainti
 
-	def get_sijainti_ruutu(self):
-		#jos palautus on False, hahmo ei ole ruudussa.
-		return self.get_maailma().get_ruutu(self.get_sijainti())
-
 	def graphics(self, graphicsitem):
 		self.graphics = graphicsitem
 
 	def move(self, keys_pressed):
-		x = 0
-		y = 0
+		dx = 0
+		dy = 0
 		if QtCore.Qt.Key_A in keys_pressed:
-			x -= 3
+			dx -= 3
 		if QtCore.Qt.Key_D in keys_pressed:
-			x += 3
+			dx += 3
 		if QtCore.Qt.Key_W in keys_pressed:
 			#tähän hyppy
 			pass
-		self.sijainti.x += x
-		self.sijainti.y += y
+		self.sijainti.x += dx
+		self.sijainti.y += dy
+		#cd(dx, dy)
 		self.graphics.update()
+
+	#collision detection
+	def cd(self, dx, dy):
+		pass
+
+

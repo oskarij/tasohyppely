@@ -1,66 +1,53 @@
-from ruutu import Ruutu
-from ruutusijainti import ruutuSijainti
 from sijainti import Sijainti
+from este import Este
 
 class Maailma():
 
-    def __init__ (self):
-        
-        #10x10 ruudukko
-    
-        self.squares = [None] * 20
-        for x in range(20):      
-            self.squares[x] = [None] * 20
-            for y in range(20):   
-                self.squares[x][y] = Ruutu()  
+    def __init__ (self, koko):
+        self.esteet = []
         self.hahmo = None
+        self.size = koko
         self.set_borders()
 
     def get_width(self):
-
-        return len(self.squares)
+        return self.size
 
     def get_height(self):
-  
-        return len(self.squares[0])
+        return self.size
 
-    def get_ruutu(self, ruutusijainti):
-        #palauttaa ruutu-olion kyseisessä sijainnissa
-        if self.contains(ruutusijainti):
-            return self.squares[ruutusijainti.get_x()][ruutusijainti.get_y()]
-        else:
-            return False
+    def add_wall(self, xy, width, height):
+        este = Este(xy, width, height)
+        self.esteet.append(este)
+        return este
 
-    def add_wall(self, ruutusijainti):
-        return self.get_ruutu(ruutusijainti).set_wall()
-
-    def contains(self, ruutusijainti):
-        x_koordinaatti = ruutusijainti.get_x()
-        y_koordinaatti = ruutusijainti.get_y()
+    def contains(self, sijainti):
+        x_koordinaatti = sijainti.get_x()
+        y_koordinaatti = sijainti.get_y()
         return 0 <= x_koordinaatti < self.get_width() and 0 <= y_koordinaatti < self.get_height()
 
     def add_hahmo(self, hahmo, sijainti):
-    	self.hahmo = hahmo
-    	ret = self.hahmo.set_maailma(self,sijainti)
-    	if ret == False:
-    		print("Hahmon lisäys ei onnistunut")
+        self.hahmo = hahmo
+        ret = self.hahmo.set_maailma(self, sijainti)
+        if ret == False:
+            print("Hahmon lisäys ei onnistunut")
 
     def get_hahmo(self):
-    	return self.hahmo
+        return self.hahmo
 
-    #asettaa tasolle 
+    #asettaa tasolle ulkoseinät
     def set_borders(self):
         x = self.get_width()
         y = self.get_height()
+        
+        seinäL = Este(Sijainti(0,0), 25, 500)
+        self.esteet.append(seinäL)
 
-        for i in range(x):
-            location1 = ruutuSijainti(i, 0)
-            location2 = ruutuSijainti(i, (y-1))
-            self.add_wall(location1)
-            self.add_wall(location2)
-     
-        for i in range(y):
-            location1 = ruutuSijainti(0, i)
-            location2 = ruutuSijainti((x-1), i)
-            self.add_wall(location1)
-            self.add_wall(location2)
+        seinäR = Este(Sijainti(475,0), 25, 500)
+        self.esteet.append(seinäR)
+
+        katto = Este(Sijainti(26,0), 448, 25)
+        self.esteet.append(katto)
+
+        lattia = Este(Sijainti(26, 475), 448, 25)
+        self.esteet.append(lattia)
+            

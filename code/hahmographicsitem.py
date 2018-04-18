@@ -2,18 +2,18 @@ from PyQt5 import QtWidgets, QtGui, QtCore
 
 class HahmoGraphicsItem(QtWidgets.QGraphicsEllipseItem):
 
-	def __init__(self, hahmo, ruutu_size):
+	def __init__(self, hahmo):
 		super(HahmoGraphicsItem, self).__init__()
 
 		self.hahmo = hahmo
-		self.ruutu_size = ruutu_size
+		self.hahmo_size = 25
 		
 		brush = QtGui.QBrush(1)
 		self.setBrush(brush)
 		
 		rect = QtCore.QRectF()
-		rect.setWidth(ruutu_size)
-		rect.setHeight(ruutu_size)
+		rect.setWidth(self.hahmo_size)
+		rect.setHeight(self.hahmo_size)
 		self.setRect(rect)
 		
 		self.update()
