@@ -1,4 +1,5 @@
 from ruutu import Ruutu
+from ruutusijainti import ruutuSijainti
 from sijainti import Sijainti
 
 class Maailma():
@@ -23,26 +24,24 @@ class Maailma():
   
         return len(self.squares[0])
 
-    def get_ruutu(self, sijainti):
+    def get_ruutu(self, ruutusijainti):
         #palauttaa ruutu-olion kyseisessä sijainnissa
-        #jos ruutua ei ole - palauttaa ruutu-objektin, joka ei sisälly tasoon
-        if self.contains(sijainti):
-            return self.squares[sijainti.get_x()][sijainti.get_y()]
+        if self.contains(ruutusijainti):
+            return self.squares[ruutusijainti.get_x()][ruutusijainti.get_y()]
         else:
-            return Ruutu(True)
+            return False
 
-    def add_wall(self, sijainti):
-        return self.get_ruutu(sijainti).set_wall()
+    def add_wall(self, ruutusijainti):
+        return self.get_ruutu(ruutusijainti).set_wall()
 
-    def contains(self, sijainti):
-        x_koordinaatti = sijainti.get_x()
-        y_koordinaatti = sijainti.get_y()
+    def contains(self, ruutusijainti):
+        x_koordinaatti = ruutusijainti.get_x()
+        y_koordinaatti = ruutusijainti.get_y()
         return 0 <= x_koordinaatti < self.get_width() and 0 <= y_koordinaatti < self.get_height()
 
     def add_hahmo(self, hahmo, sijainti):
     	self.hahmo = hahmo
-    	ret = self.get_ruutu(sijainti).set_hahmo(hahmo)
-    	self.hahmo.set_maailma(self,sijainti)
+    	ret = self.hahmo.set_maailma(self,sijainti)
     	if ret == False:
     		print("Hahmon lisäys ei onnistunut")
 
@@ -55,13 +54,13 @@ class Maailma():
         y = self.get_height()
 
         for i in range(x):
-            location1 = Sijainti(i, 0)
-            location2 = Sijainti(i, (y-1))
+            location1 = ruutuSijainti(i, 0)
+            location2 = ruutuSijainti(i, (y-1))
             self.add_wall(location1)
             self.add_wall(location2)
      
         for i in range(y):
-            location1 = Sijainti(0, i)
-            location2 = Sijainti((x-1), i)
+            location1 = ruutuSijainti(0, i)
+            location2 = ruutuSijainti((x-1), i)
             self.add_wall(location1)
             self.add_wall(location2)

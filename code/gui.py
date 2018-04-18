@@ -15,15 +15,14 @@ class GUI(QtWidgets.QMainWindow):
         self.centralWidget().setLayout(self.horizontal)
         self.init_window()
         self.hahmo_graphics = None
+        self.keys_pressed = set()
 
         self.add_maailma_grid_items()
         self.add_hahmo_graphics_items()
-        self.update_hahmo()
+        self.hahmo_graphics.update()
 
-        self.timer = QtCore.QTimer()
-        self.timer.timeout.connect(self.update_hahmo)
-        self.timer.start(10) 
-
+        self.timer = QtCore.QBasicTimer()
+        self.timer.start(16,self)
 
     def init_window(self):
         
@@ -31,11 +30,9 @@ class GUI(QtWidgets.QMainWindow):
         self.setWindowTitle('Tasohyppely')
         self.show()
 
-        # Add a scene for drawing 2d objects
         self.scene = QtWidgets.QGraphicsScene()
         self.scene.setSceneRect(0, 0, 700, 700)
 
-        # Add a view for showing the scene
         self.view = QtWidgets.QGraphicsView(self.scene, self)
         self.view.adjustSize()
         self.view.show()
@@ -63,11 +60,22 @@ class GUI(QtWidgets.QMainWindow):
                     self.scene.addItem(square)
 
     def add_hahmo_graphics_items(self):
-    	hahmo = self.taso.get_hahmo()
-    	hahmo_graphics = HahmoGraphicsItem(hahmo, self.ruutu_size)
+    	self.hahmo = self.taso.get_hahmo()
+    	hahmo_graphics = HahmoGraphicsItem(self.hahmo, self.ruutu_size)
+    	self.hahmo.graphics(hahmo_graphics)
     	self.hahmo_graphics = hahmo_graphics
     	self.scene.addItem(hahmo_graphics)
 
+    def keyPressEvent(self, event):
+    	self.keys_pressed.add(event.key())
+    	print(self.keys_pressed)
 
-    def update_hahmo(self):
-    	self.hahmo_graphics.update()
+    def keyReleaseEvent(self, event):
+    	self.keys_pressed.remove(event.key())
+
+    def timerEvent(self, event):
+    	self.move_hahmo()
+    	self.scene.update()
+
+    def move_hahmo(self):
+    	self.hahmo.move(self.keys_pressed)
