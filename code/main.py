@@ -7,14 +7,12 @@ from sijainti import Sijainti
 from hahmo import Hahmo
 
 
-#RUUTUJENKOKO = 25
 MAAILMAN_KOKO = 500
 
 def main():
 	taso1 = Maailma(MAAILMAN_KOKO)
 	hahmo = Hahmo()
-	aloitussijainti = Sijainti(25, 450)
-	taso1.add_hahmo(hahmo, aloitussijainti)
+	taso1.add_hahmo(hahmo)
 
 	app = QApplication(sys.argv)
 	gui = GUI(taso1, taso1.esteet)

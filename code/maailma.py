@@ -25,9 +25,9 @@ class Maailma():
         y_koordinaatti = sijainti.get_y()
         return 0 <= x_koordinaatti < self.get_width() and 0 <= y_koordinaatti < self.get_height()
 
-    def add_hahmo(self, hahmo, sijainti):
+    def add_hahmo(self, hahmo):
         self.hahmo = hahmo
-        ret = self.hahmo.set_maailma(self, sijainti)
+        ret = self.hahmo.set_maailma(self)
         if ret == False:
             print("Hahmon lisäys ei onnistunut")
 
@@ -36,18 +36,9 @@ class Maailma():
 
     #asettaa tasolle ulkoseinät
     def set_borders(self):
-        x = self.get_width()
-        y = self.get_height()
-        
-        seinäL = Este(Sijainti(0,0), 25, 500)
-        self.esteet.append(seinäL)
+        self.add_wall(Sijainti(0,0), 25, 500)
+        self.add_wall(Sijainti(475,0), 25, 500)
+        self.add_wall(Sijainti(26,0), 448, 25)
+        self.add_wall(Sijainti(26, 475), 448, 25)
 
-        seinäR = Este(Sijainti(475,0), 25, 500)
-        self.esteet.append(seinäR)
 
-        katto = Este(Sijainti(26,0), 448, 25)
-        self.esteet.append(katto)
-
-        lattia = Este(Sijainti(26, 475), 448, 25)
-        self.esteet.append(lattia)
-            

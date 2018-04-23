@@ -15,7 +15,7 @@ class HahmoGraphicsItem(QtWidgets.QGraphicsEllipseItem):
 		rect.setWidth(self.hahmo_size)
 		rect.setHeight(self.hahmo_size)
 		self.setRect(rect)
-		
+	
 		self.update()
 
 	def update(self):

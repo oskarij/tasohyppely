@@ -42,28 +42,28 @@ class GUI(QtWidgets.QMainWindow):
             estegraphics = QtWidgets.QGraphicsRectItem(i.x, i.y, i.width, i.height)
             color = QtGui.QColor(0,0,0) 
             brush = QtGui.QBrush(color)
-            #pen = QtGui.QPen(color)
-            #estegraphics.setPen(pen)
             estegraphics.setBrush(brush)
+            i.add_graphics(estegraphics)
             self.scene.addItem(estegraphics)
 
     def add_hahmo_graphics_items(self):
-    	self.hahmo = self.taso.get_hahmo()
-    	hahmo_graphics = HahmoGraphicsItem(self.hahmo)
-    	self.hahmo.graphics(hahmo_graphics)
-    	self.hahmo_graphics = hahmo_graphics
-    	self.scene.addItem(hahmo_graphics)
+        self.hahmo = self.taso.get_hahmo()
+
+        hahmo_graphics = HahmoGraphicsItem(self.hahmo)
+        self.hahmo.graphics(hahmo_graphics)
+        self.hahmo_graphics = hahmo_graphics
+        
+        self.scene.addItem(hahmo_graphics)
 
     def keyPressEvent(self, event):
-    	self.keys_pressed.add(event.key())
-    	print(self.keys_pressed)
+        self.keys_pressed.add(event.key())
 
     def keyReleaseEvent(self, event):
-    	self.keys_pressed.remove(event.key())
+        self.keys_pressed.remove(event.key())
 
     def timerEvent(self, event):
-    	self.move_hahmo()
-    	self.scene.update()
+        self.update_hahmo()
+        self.scene.update()
 
-    def move_hahmo(self):
-    	self.hahmo.move(self.keys_pressed)
+    def update_hahmo(self):
+        self.hahmo.update(self.keys_pressed)

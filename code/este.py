@@ -5,6 +5,7 @@ class Este():
 		self.y = xy.get_y()
 		self.width = width
 		self.height = height
+		self.graphics = None
 
 		def get_x(self):
 			return self.x
@@ -17,3 +18,6 @@ class Este():
 
 		def get_height(self):
 			return self.height
+
+	def add_graphics(self, graphicsitem):
+		self.graphics = graphicsitem
