@@ -10,6 +10,7 @@ class Hahmo():
 		self.sijainti = None 
 		self.dead = False
 		self.graphics
+		self.counter = 0
 
 	def get_maailma(self):
 		return self.maailma
@@ -39,7 +40,8 @@ class Hahmo():
 
 	def update(self, keys_pressed):
 		dx = 0
-		dy = 0
+		if self.counter == 0:
+			dy = 5
 		
 		#x-suuntainen liike
 		if QtCore.Qt.Key_A in keys_pressed:
@@ -53,9 +55,13 @@ class Hahmo():
 		if QtCore.Qt.Key_W in keys_pressed:
 			ret = self.on_ground()
 			if ret == True:
-				pass
+				self.counter = 10
+		
+		if self.counter != 0:
+			dy = -10
+			self.counter -= 1
 
-		#self.collision(dy)
+		self.collision(dy)
 
 		if QtCore.Qt.Key_R in keys_pressed:
 			self.reset()
@@ -96,5 +102,9 @@ class Hahmo():
 
 		#y-suuntainen liike
 		else:
-			pass
-				
+			if d < 0:
+				self.sijainti.y += d
+				self.graphics.update()
+			if self.on_ground() == False and d > 0:
+				self.sijainti.y += d
+				self.graphics.update()			
