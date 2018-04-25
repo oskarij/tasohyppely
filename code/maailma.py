@@ -34,6 +34,9 @@ class Maailma():
     def get_hahmo(self):
         return self.hahmo
 
+    def remove_wall(self, este):
+        self.esteet.remove(este)
+
     #asettaa tasolle ulkoseinät
     def set_borders(self):
         self.add_wall(Sijainti(0,0), 25, 500)

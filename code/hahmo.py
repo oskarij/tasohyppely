@@ -102,9 +102,32 @@ class Hahmo():
 
 		#y-suuntainen liike
 		else:
+			#hyppy
 			if d < 0:
 				self.sijainti.y += d
 				self.graphics.update()
+
+				for i in self.maailma.esteet:
+					ret = self.graphics.collidesWithItem(i.graphics)
+
+					if ret == True:
+						while ret == True:
+							self.sijainti.y += 1
+							self.graphics.update()
+							ret = self.graphics.collidesWithItem(i.graphics)
+						self.counter = 0		
+			
+			#putoaminen
 			if self.on_ground() == False and d > 0:
 				self.sijainti.y += d
-				self.graphics.update()			
+				self.graphics.update()
+
+				for i in self.maailma.esteet:
+					ret = self.graphics.collidesWithItem(i.graphics)
+
+					if ret == True:
+						while ret == True:
+							self.sijainti.y -= 1
+							self.graphics.update()
+							ret = self.graphics.collidesWithItem(i.graphics)
+							
