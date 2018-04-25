@@ -9,25 +9,45 @@ class GUI(QtWidgets.QMainWindow):
     def __init__(self, taso, esteet):
         super().__init__()
         self.taso = taso
+        self.hahmo_graphics = None
+        self.keys_pressed = set()
+        self.esteet = esteet
+
         self.setCentralWidget(QtWidgets.QWidget())
         self.horizontal = QtWidgets.QHBoxLayout()
         self.centralWidget().setLayout(self.horizontal)
-        self.init_window()
-        self.hahmo_graphics = None
-        self.keys_pressed = set()
-
-        self.add_esteet_items(esteet)
-        self.add_hahmo_graphics_items()
-        self.hahmo_graphics.update()
-
-        self.timer = QtCore.QBasicTimer()
-        self.timer.start(16,self)
-
-    def init_window(self):
+        self.setGeometry(300, 200, 800, 800)
+        self.mainmenu()
         
-        self.setGeometry(300, 300, 800, 800)
-        self.setWindowTitle('Tasohyppely')
+    def mainmenu(self):
+        self.setWindowTitle('Main Menu')
+
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        
+        self.peli = QtWidgets.QPushButton('Aloita peli', self)
+        self.peli.move(250,275)
+        self.peli.setFixedSize(300,100)
+        self.peli.setFont(font)
+        
+        self.stats = QtWidgets.QPushButton('Pisteet', self)
+        self.stats.move(250, 425)
+        self.stats.setFixedSize(300,100)
+        self.stats.setFont(font)
+
+        self.exitbutton = QtWidgets.QPushButton('Exit', self)
+        self.exitbutton.move(5,5)
+        
         self.show()
+
+        self.peli.clicked.connect(self.game)
+        self.stats.clicked.connect(self.hiscores)
+
+    def game(self):
+        self.peli.hide()
+        self.stats.hide()
+        self.exitbutton.hide()
+        self.setWindowTitle('Tasohyppely')
 
         self.scene = QtWidgets.QGraphicsScene()
         self.scene.setSceneRect(0, 0, 700, 700)
@@ -36,6 +56,17 @@ class GUI(QtWidgets.QMainWindow):
         self.view.adjustSize()
         self.view.show()
         self.horizontal.addWidget(self.view)
+        self.show()
+
+        self.add_esteet_items(self.esteet)
+        self.add_hahmo_graphics_items()
+        self.hahmo_graphics.update()
+
+        self.timer = QtCore.QBasicTimer()
+        self.timer.start(16,self)
+
+    def hiscores(self):
+        pass
 
     def add_esteet_items(self, esteet):
         for i in esteet:
@@ -67,3 +98,6 @@ class GUI(QtWidgets.QMainWindow):
 
     def update_hahmo(self):
         self.hahmo.update(self.keys_pressed)
+
+    def activate_exit(self):
+        self.exitbutton.clicked.connect(self.close)

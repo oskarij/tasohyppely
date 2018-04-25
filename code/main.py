@@ -21,6 +21,7 @@ def main():
 	app = QApplication(sys.argv)
 	gui = GUI(taso1, taso1.esteet)
 
+	gui.activate_exit()
 	sys.exit(app.exec_())
 
 if __name__ == '__main__':
