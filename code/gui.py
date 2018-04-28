@@ -6,12 +6,13 @@ from hahmographicsitem import HahmoGraphicsItem
 
 class GUI(QtWidgets.QMainWindow):
 
-    def __init__(self, taso, esteet):
+    def __init__(self, taso, esteet,app):
         super().__init__()
         self.taso = taso
         self.hahmo_graphics = None
         self.keys_pressed = set()
         self.esteet = esteet
+        self.app = app
 
         self.setCentralWidget(QtWidgets.QWidget())
         self.horizontal = QtWidgets.QHBoxLayout()
@@ -30,7 +31,7 @@ class GUI(QtWidgets.QMainWindow):
         self.peli.setFixedSize(300,100)
         self.peli.setFont(font)
         
-        self.stats = QtWidgets.QPushButton('Pisteet', self)
+        self.stats = QtWidgets.QPushButton('Ajat', self)
         self.stats.move(250, 425)
         self.stats.setFixedSize(300,100)
         self.stats.setFont(font)
@@ -47,6 +48,12 @@ class GUI(QtWidgets.QMainWindow):
         self.peli.hide()
         self.stats.hide()
         self.exitbutton.hide()
+        
+        text, okPressed = QtWidgets.QInputDialog.getText(self, " ","Nimesi:", QtWidgets.QLineEdit.Normal, "")
+        while not okPressed and text == '':
+            text, okPressed = QtWidgets.QInputDialog.getText(self, " ","Nimesi:", QtWidgets.QLineEdit.Normal, "")
+        self.taso.add_pelaaja(text)
+
         self.setWindowTitle('Tasohyppely')
 
         self.scene = QtWidgets.QGraphicsScene()
@@ -63,7 +70,7 @@ class GUI(QtWidgets.QMainWindow):
         self.hahmo_graphics.update()
 
         self.timer = QtCore.QBasicTimer()
-        self.timer.start(16,self)
+        self.timer.start(15,self)
 
     def hiscores(self):
         pass
@@ -76,9 +83,12 @@ class GUI(QtWidgets.QMainWindow):
             estegraphics.setBrush(brush)
             i.add_graphics(estegraphics)
             self.scene.addItem(estegraphics)
+        if self.taso.maali != None:
+            self.scene.addItem(self.taso.maali)
 
     def add_hahmo_graphics_items(self):
         self.hahmo = self.taso.get_hahmo()
+        self.hahmo.add_gui(self)
 
         hahmo_graphics = HahmoGraphicsItem(self.hahmo)
         self.hahmo.graphics(hahmo_graphics)
@@ -95,6 +105,7 @@ class GUI(QtWidgets.QMainWindow):
     def timerEvent(self, event):
         self.update_hahmo()
         self.scene.update()
+        self.hahmo.aika()
 
     def update_hahmo(self):
         self.hahmo.update(self.keys_pressed)

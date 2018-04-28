@@ -2,6 +2,8 @@ from PyQt5 import QtCore
 
 from hahmographicsitem import HahmoGraphicsItem
 from sijainti import Sijainti
+from voitto import Voitto
+import os, sys
 
 class Hahmo():
 	
@@ -11,6 +13,8 @@ class Hahmo():
 		self.dead = False
 		self.graphics
 		self.counter = 0
+		self.gui = None
+		self.time = 0
 
 	def get_maailma(self):
 		return self.maailma
@@ -20,7 +24,7 @@ class Hahmo():
 			return False
 		else:
 			self.maailma = maailma
-			self.sijainti = Sijainti(26,449)
+			self.sijainti = Sijainti(26,649)
 			return True
 
 	def is_dead(self):
@@ -36,7 +40,10 @@ class Hahmo():
 		self.graphics = graphicsitem
 
 	def reset(self):
-		self.sijainti = Sijainti(26,449)
+		self.sijainti = Sijainti(26,649)
+
+	def add_gui(self,gui):
+		self.gui = gui
 
 	def update(self, keys_pressed):
 		dx = 0
@@ -48,7 +55,7 @@ class Hahmo():
 			dx -= 3
 		if QtCore.Qt.Key_D in keys_pressed:
 			dx += 3
-
+		
 		self.collision(dx)
 		
 		#y-suuntainen liike
@@ -84,6 +91,10 @@ class Hahmo():
 		if d == 3 or d == -3:
 			self.sijainti.x += d
 			self.graphics.update()
+
+			ret = self.graphics.collidesWithItem(self.maailma.maali)
+			if ret == True:
+				Voitto(self.time, self.maailma)
 
 			#iteroidaan läpi jokainen este tasossa
 			for i in self.maailma.esteet:
@@ -130,4 +141,6 @@ class Hahmo():
 							self.sijainti.y -= 1
 							self.graphics.update()
 							ret = self.graphics.collidesWithItem(i.graphics)
-							
+
+	def aika(self):
+		self.time += 0.015
