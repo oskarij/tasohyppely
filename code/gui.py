@@ -3,6 +3,7 @@ import sys
 
 from hahmo import Hahmo
 from hahmographicsitem import HahmoGraphicsItem
+from toptengraphics import TopTenGraphics
 
 class GUI(QtWidgets.QMainWindow):
 
@@ -13,6 +14,7 @@ class GUI(QtWidgets.QMainWindow):
         self.keys_pressed = set()
         self.esteet = esteet
         self.app = app
+        self.top = None
 
         self.setCentralWidget(QtWidgets.QWidget())
         self.horizontal = QtWidgets.QHBoxLayout()
@@ -36,7 +38,7 @@ class GUI(QtWidgets.QMainWindow):
         self.stats.setFixedSize(300,100)
         self.stats.setFont(font)
 
-        self.exitbutton = QtWidgets.QPushButton('Exit', self)
+        self.exitbutton = QtWidgets.QPushButton('Sulje', self)
         self.exitbutton.move(5,5)
         
         self.show()
@@ -73,7 +75,30 @@ class GUI(QtWidgets.QMainWindow):
         self.timer.start(15,self)
 
     def hiscores(self):
-        pass
+        ajat = {}
+        try:
+            with open("sav.txt", "r")as f:
+                lines = f.readlines()
+                for line in lines:
+                    arr = line.split("|")
+                    ajat[arr[0]] = float(arr[1])
+            asc = sorted(ajat.items(), key=lambda x: x[1])
+        except FileNotFoundError:
+            asc = []
+
+        topten = []
+        try:
+            for i in range(10):
+                topten.append(asc[i])
+        except IndexError:
+            pass
+
+        if self.top == None:
+            self.top = TopTenGraphics(topten)
+
+        self.top.show()
+
+
 
     def add_esteet_items(self, esteet):
         for i in esteet:
