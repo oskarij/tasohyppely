@@ -94,7 +94,7 @@ class Hahmo():
 
 			ret = self.graphics.collidesWithItem(self.maailma.maali)
 			if ret == True:
-				Voitto(self.time, self.maailma)
+				Voitto(self.time, self.maailma.pelaaja)
 
 			#iteroidaan läpi jokainen este tasossa
 			for i in self.maailma.esteet:

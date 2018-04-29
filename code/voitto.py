@@ -2,13 +2,13 @@ from PyQt5 import QtWidgets, QtGui, QtCore
 import os
 import sys
 
+from savestats import SaveStats
+
 class Voitto():
 	
-	def __init__(self,aika,maailma):
+	def __init__(self, aika, pelaaja):
 		ds = (aika % 1)*100	
 		minute = aika / 60
-
-		self.maailma = maailma
 
 		self = QtWidgets.QMessageBox()
 		self.setWindowTitle(" ")
@@ -17,6 +17,6 @@ class Voitto():
 		self.setInformativeText("Aikasi oli: \n{:2.0f} min {:2.0f} s {:2.0f} ms".format(minute,aika,ds))
 		self.exec()
 
-		#tähän tietojen tallennus
+		SaveStats(aika, pelaaja)
 
 		os.execl(sys.executable, sys.executable, *sys.argv)

@@ -100,7 +100,10 @@ class GUI(QtWidgets.QMainWindow):
         self.keys_pressed.add(event.key())
 
     def keyReleaseEvent(self, event):
-        self.keys_pressed.remove(event.key())
+        try:
+            self.keys_pressed.remove(event.key())
+        except KeyError:
+            pass
 
     def timerEvent(self, event):
         self.update_hahmo()
