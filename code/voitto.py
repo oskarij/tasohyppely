@@ -4,6 +4,8 @@ import sys
 
 from savestats import SaveStats
 
+#Luo pop-up -viestin voitosta ja tulostaa tuloksen.
+
 class Voitto():
     
     def __init__(self, aika, pelaaja):
@@ -19,6 +21,7 @@ class Voitto():
         self.setInformativeText("Aikasi oli: \n{:2.0f} min {:s} s {:2.0f} ms".format(minute,s1,ds))
         self.exec()
 
-        SaveStats(aika, pelaaja)
+        SaveStats(aika, pelaaja) #tallennetaan tulos
 
+        #Palataan main menuun käynnistämällä ohjelma uusiksi
         os.execl(sys.executable, sys.executable, *sys.argv)

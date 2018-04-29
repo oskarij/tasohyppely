@@ -5,12 +5,13 @@ from sijainti import Sijainti
 from voitto import Voitto
 import os, sys
 
+#Sisältää hahmon toiminnan ja liikkeen päivityksen
+
 class Hahmo():
 	
 	def __init__(self):
 		self.maailma = None
 		self.sijainti = None 
-		self.dead = False
 		self.graphics
 		self.counter = 0
 		self.gui = None
@@ -19,6 +20,7 @@ class Hahmo():
 	def get_maailma(self):
 		return self.maailma
 
+	#asettaa hahmon maailmaan
 	def set_maailma(self, maailma):
 		if self.get_maailma() is not None:
 			return False
@@ -26,12 +28,6 @@ class Hahmo():
 			self.maailma = maailma
 			self.sijainti = Sijainti(26,649)
 			return True
-
-	def is_dead(self):
-		return self.dead
-
-	def revive(self):
-		self.dead = True
 
 	def get_sijainti(self):
 		return self.sijainti
@@ -41,6 +37,7 @@ class Hahmo():
 
 	def reset(self):
 		self.sijainti = Sijainti(26,649)
+		self.time = 0
 
 	def add_gui(self,gui):
 		self.gui = gui
@@ -75,6 +72,7 @@ class Hahmo():
 
 		self.graphics.update()
 
+	#tarkistetaan, että hahmo on jonkin tason päällä
 	def on_ground(self):
 		self.sijainti.y += 1
 		self.graphics.update()
@@ -85,6 +83,7 @@ class Hahmo():
 		self.sijainti.y -= 1
 		return ret
 
+	#hoitaa törmäyksentunnistuksen
 	def collision(self, d):
 
 		#x-suuntainen liike

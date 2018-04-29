@@ -5,11 +5,13 @@ from hahmo import Hahmo
 from hahmographicsitem import HahmoGraphicsItem
 from toptengraphics import TopTenGraphics
 
+#hoitaa ohjelman grafiikan
+
 class GUI(QtWidgets.QMainWindow):
 
-    def __init__(self, taso, esteet,app):
+    def __init__(self, maailma, esteet,app):
         super().__init__()
-        self.taso = taso
+        self.maailma = maailma
         self.hahmo_graphics = None
         self.keys_pressed = set()
         self.esteet = esteet
@@ -22,12 +24,21 @@ class GUI(QtWidgets.QMainWindow):
         self.setGeometry(300, 200, 800, 800)
         self.mainmenu()
         
+    #main menun piirtäminen
     def mainmenu(self):
         self.setWindowTitle('Main Menu')
 
         font = QtGui.QFont()
         font.setPointSize(20)
-        
+
+        self.label = QtWidgets.QLabel(self)
+        self.label.setText("WASD-näppäimillä liikutetaan.\nR-näppäimellä pelin uudelleenaloitus.")
+        self.label.move(200,50)
+        self.label.setFixedSize(400,300)
+        fontlabel = QtGui.QFont()
+        fontlabel.setPointSize(15)
+        self.label.setFont(fontlabel)
+
         self.peli = QtWidgets.QPushButton('Aloita peli', self)
         self.peli.move(250,275)
         self.peli.setFixedSize(300,100)
@@ -46,15 +57,17 @@ class GUI(QtWidgets.QMainWindow):
         self.peli.clicked.connect(self.game)
         self.stats.clicked.connect(self.hiscores)
 
+    #pelin piirtäminen
     def game(self):
         self.peli.hide()
         self.stats.hide()
         self.exitbutton.hide()
+        self.label.hide()
         
         text, okPressed = QtWidgets.QInputDialog.getText(self, " ","Nimesi:", QtWidgets.QLineEdit.Normal, "")
         while not okPressed and text == '':
             text, okPressed = QtWidgets.QInputDialog.getText(self, " ","Nimesi:", QtWidgets.QLineEdit.Normal, "")
-        self.taso.add_pelaaja(text)
+        self.maailma.add_pelaaja(text)
 
         self.setWindowTitle('Tasohyppely')
 
@@ -74,6 +87,7 @@ class GUI(QtWidgets.QMainWindow):
         self.timer = QtCore.QBasicTimer()
         self.timer.start(15,self)
 
+    #parhaan 10 tulosten piirtäminen
     def hiscores(self):
         ajat = {}
         try:
@@ -99,7 +113,7 @@ class GUI(QtWidgets.QMainWindow):
         self.top.show()
 
 
-
+    #lisää esteiden grafiikat
     def add_esteet_items(self, esteet):
         for i in esteet:
             estegraphics = QtWidgets.QGraphicsRectItem(i.x, i.y, i.width, i.height)
@@ -108,11 +122,12 @@ class GUI(QtWidgets.QMainWindow):
             estegraphics.setBrush(brush)
             i.add_graphics(estegraphics)
             self.scene.addItem(estegraphics)
-        if self.taso.maali != None:
-            self.scene.addItem(self.taso.maali)
+        if self.maailma.maali != None:
+            self.scene.addItem(self.maailma.maali)
 
+    #lisää hahmon grafiikat
     def add_hahmo_graphics_items(self):
-        self.hahmo = self.taso.get_hahmo()
+        self.hahmo = self.maailma.get_hahmo()
         self.hahmo.add_gui(self)
 
         hahmo_graphics = HahmoGraphicsItem(self.hahmo)
@@ -121,15 +136,19 @@ class GUI(QtWidgets.QMainWindow):
         
         self.scene.addItem(hahmo_graphics)
 
+    #napin painallus
     def keyPressEvent(self, event):
         self.keys_pressed.add(event.key())
 
+    #napin irtipäästäminen
     def keyReleaseEvent(self, event):
         try:
             self.keys_pressed.remove(event.key())
         except KeyError:
             pass
+            #jotkin toimintaan liittymättömät näppäimet aiheuttavat errorin
 
+    #periodisesti päivitettävät asiat
     def timerEvent(self, event):
         self.update_hahmo()
         self.scene.update()

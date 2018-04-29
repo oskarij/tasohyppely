@@ -1,5 +1,7 @@
 from PyQt5 import QtWidgets, QtGui, QtCore
 
+#hoitaa hahmon piirtämisen
+
 class HahmoGraphicsItem(QtWidgets.QGraphicsEllipseItem):
 
 	def __init__(self, hahmo):
@@ -15,21 +17,16 @@ class HahmoGraphicsItem(QtWidgets.QGraphicsEllipseItem):
 		rect.setWidth(self.hahmo_size)
 		rect.setHeight(self.hahmo_size)
 		self.setRect(rect)
-	
+		color = QtGui.QColor(247,93,178)
+		brush = QtGui.QBrush(color)
+		self.setBrush(brush)
+		
 		self.update()
 
 	def update(self):
 		self.updatePosition()
-		self.updateColor()
+		#tähän mahdollisia hahmoon liittyviä päivitettäviä asioita
 
 	def updatePosition(self):
 		sijainti = self.hahmo.get_sijainti()
 		self.setPos(sijainti.x, sijainti.y)
-
-	def updateColor(self):
-		#muita värejä?
-		color = QtGui.QColor(247,93,178)
-		brush = QtGui.QBrush(color)
-		self.setBrush(brush)
-
-	#updatehp?

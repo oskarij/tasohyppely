@@ -1,3 +1,5 @@
+#tason "seinät"
+
 class Este():
 
 	def __init__(self, xy, width, height):

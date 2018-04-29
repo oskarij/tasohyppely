@@ -1,5 +1,7 @@
 from PyQt5 import QtWidgets, QtCore, QtGui
 
+#tason maali
+
 class Maali(QtWidgets.QGraphicsRectItem):
 	
 	def __init__(self, sijainti):

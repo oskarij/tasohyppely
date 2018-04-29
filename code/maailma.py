@@ -2,6 +2,8 @@ from sijainti import Sijainti
 from este import Este
 from maali import Maali
 
+#pelin taso
+
 class Maailma():
 
     def __init__ (self, koko):
@@ -18,6 +20,7 @@ class Maailma():
     def get_height(self):
         return self.size
 
+    #luo uuden "seinän" maailmaan
     def add_wall(self, xy, width, height):
         este = Este(xy, width, height)
         self.esteet.append(este)
@@ -25,12 +28,7 @@ class Maailma():
 
     def add_maali(self,xy):
         self.maali = Maali(xy)
-
-    def contains(self, sijainti):
-        x_koordinaatti = sijainti.get_x()
-        y_koordinaatti = sijainti.get_y()
-        return 0 <= x_koordinaatti < self.get_width() and 0 <= y_koordinaatti < self.get_height()
-
+        
     def add_hahmo(self, hahmo):
         self.hahmo = hahmo
         ret = self.hahmo.set_maailma(self)

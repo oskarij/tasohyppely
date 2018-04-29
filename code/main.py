@@ -15,8 +15,10 @@ def main():
 	hahmo = Hahmo()
 	taso1.add_hahmo(hahmo)
 
-	#taso1.add_maali(Sijainti(400,26))  #oikea
-	taso1.add_maali(Sijainti(665,625)) #demo
+
+	#poistamalla demomaalin kommentin voi testata maaliinpääsemistä helpommin
+	taso1.add_maali(Sijainti(400,26))  #oikea
+	#taso1.add_maali(Sijainti(665,625)) #demo
 
 
 	platform1 = taso1.add_wall(Sijainti(100,600), 100, 25)
@@ -32,7 +34,7 @@ def main():
 	platform11 = taso1.add_wall(Sijainti(125,200),5,5)
 	platform12 = taso1.add_wall(Sijainti(525,225),25,25)
 	platform13 = taso1.add_wall(Sijainti(625,175),25,25)
-	platform14 = taso1.add_wall(Sijainti(525,150),25,25)
+	platform14 = taso1.add_wall(Sijainti(523,150),25,25)
 	platform15 = taso1.add_wall(Sijainti(375,25),25,75)
 
 	app = QApplication(sys.argv)

@@ -1,6 +1,8 @@
 from PyQt5 import QtWidgets, QtGui
 
 
+#Hoitaa 10 parhaan tuloksen tulostamisen.
+
 class TopTenGraphics(QtWidgets.QWidget):
 
     def __init__(self,topten):
