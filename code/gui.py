@@ -1,5 +1,5 @@
 from PyQt5 import QtWidgets, QtCore, QtGui
-import sys
+import sys, os
 
 from hahmo import Hahmo
 from hahmographicsitem import HahmoGraphicsItem
@@ -63,9 +63,11 @@ class GUI(QtWidgets.QMainWindow):
         self.stats.hide()
         self.exitbutton.hide()
         self.label.hide()
-        
+
         text, okPressed = QtWidgets.QInputDialog.getText(self, " ","Nimesi:", QtWidgets.QLineEdit.Normal, "")
-        while not okPressed and text == '':
+        while not okPressed:
+            text, okPressed = QtWidgets.QInputDialog.getText(self, " ","Nimesi:", QtWidgets.QLineEdit.Normal, "")
+        while text == '':
             text, okPressed = QtWidgets.QInputDialog.getText(self, " ","Nimesi:", QtWidgets.QLineEdit.Normal, "")
         self.maailma.add_pelaaja(text)
 
