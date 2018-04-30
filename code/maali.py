@@ -8,7 +8,7 @@ class Maali(QtWidgets.QGraphicsRectItem):
 		super(Maali, self).__init__()
 
 		self.xy = sijainti
-		self.sizey = 50
+		self.sizey = 49
 		self.sizex = 10
 
 		rect = QtCore.QRectF()
@@ -18,6 +18,6 @@ class Maali(QtWidgets.QGraphicsRectItem):
 
 		self.setPos(self.xy.x, self.xy.y)
 
-		color = QtGui.QColor(255,0,0)
+		color = QtGui.QColor(255,255,0)
 		brush = QtGui.QBrush(color)
 		self.setBrush(brush)

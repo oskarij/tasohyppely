@@ -101,6 +101,8 @@ class Hahmo():
 				
 				#jos törmäys tapahtuu -> vähennetään sijaintia kunnes ei törmää enää
 				if ret == True:
+					if i.ansa == True:
+						self.reset()
 					while ret == True:
 						if d == 3:
 							self.sijainti.x -= 1
@@ -121,6 +123,8 @@ class Hahmo():
 					ret = self.graphics.collidesWithItem(i.graphics)
 
 					if ret == True:
+						if i.ansa == True:
+							self.reset()
 						while ret == True:
 							self.sijainti.y += 1
 							self.graphics.update()
@@ -136,6 +140,8 @@ class Hahmo():
 					ret = self.graphics.collidesWithItem(i.graphics)
 
 					if ret == True:
+						if i.ansa == True:
+							self.reset()
 						while ret == True:
 							self.sijainti.y -= 1
 							self.graphics.update()

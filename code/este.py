@@ -8,18 +8,22 @@ class Este():
 		self.width = width
 		self.height = height
 		self.graphics = None
+		self.ansa = False
 
-		def get_x(self):
-			return self.x
+	def get_x(self):
+		return self.x
 
-		def get_y(self):
-			return self.y
+	def get_y(self):
+		return self.y
 
-		def get_width(self):
-			return self.width
+	def get_width(self):
+		return self.width
 
-		def get_height(self):
-			return self.height
+	def get_height(self):
+		return self.height
 
 	def add_graphics(self, graphicsitem):
 		self.graphics = graphicsitem
+
+	def make_ansa(self):
+		self.ansa = True

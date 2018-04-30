@@ -117,7 +117,10 @@ class GUI(QtWidgets.QMainWindow):
     def add_esteet_items(self, esteet):
         for i in esteet:
             estegraphics = QtWidgets.QGraphicsRectItem(i.x, i.y, i.width, i.height)
-            color = QtGui.QColor(0,0,0) 
+            if i.ansa == False:
+                color = QtGui.QColor(0,0,0)
+            else:
+                color = QtGui.QColor(255,0,0) 
             brush = QtGui.QBrush(color)
             estegraphics.setBrush(brush)
             i.add_graphics(estegraphics)

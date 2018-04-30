@@ -36,6 +36,11 @@ def main():
 	platform13 = taso1.add_wall(Sijainti(625,175),25,25)
 	platform14 = taso1.add_wall(Sijainti(523,150),25,25)
 	platform15 = taso1.add_wall(Sijainti(375,25),25,75)
+	platform16 = taso1.add_wall(Sijainti(225,299),100,20)
+	platform17 = taso1.add_wall(Sijainti(200,674),175,20)
+
+	platform16.make_ansa()
+	platform17.make_ansa()
 
 	app = QApplication(sys.argv)
 	gui = GUI(taso1, taso1.esteet, app)
